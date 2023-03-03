@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.use(authRoutes)
 
 app.get("/", requireAuth,(req, res) => {
-  res.send("hello from simple server :)")
+  res.send("hello from simple server  :)")
 })
 
 app.post("/lol", (req, res) => {
