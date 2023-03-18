@@ -67,23 +67,30 @@ async function authorize() {
 }
 
 function listMessages(auth, query){
-  query='parthakmehta@gmail.com';
+  query = 'from:parthakmehta@gmail.com subject:"Transaction alert"';
+
   return new Promise((resolve, reject) => {    
     const gmail = google.gmail({version: 'v1', auth});
     gmail.users.messages.list(      
       {        
         userId: 'me',  
         q:query,      
-        maxResults:5     
       },            (err, res) => {        
         if (err) {                    reject(err);          
           return;        
         }        
         if (!res.data.messages) {                    resolve([]);          
           return;        
-        }                resolve(res.data);  
+        }               
 
-                         getMail(res.data.messages[0].id, auth);
+        const messages = res.data.messages;
+
+        messages.forEach(message => {
+          const messageId = message.id;
+
+            getMail(messageId, auth);
+
+            });
       }    
     );  
   })
@@ -97,22 +104,30 @@ function getMail(msgId, auth){
   }, (err, res) => {
       if(!err){
           var body = res.data.payload.parts[0].body.data;
-
           var htmlBody = nodeBase64.decode(body.replace(/-/g, '+').replace(/_/g, '/'));
-          extractTransactionInfo(htmlBody);
+          extractTransactionInfo(msgId, htmlBody);
       }
   });
 }
 
 
-function extractTransactionInfo(htmlBody) {
- 
+function extractTransactionInfo(msgId, htmlBody) {
+  console.log("Gmail Message ID:", msgId);
+
+  fs.writeFile("transaction_raw_content.txt", htmlBody, function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+}); 
+
  // const regex = /Thank you for using your Card no. (\S+) for (\S+) at (\S+) on (\S+) (\S+)\. The total credit limit on your card is (\S+), while the available limit is (\S+)\./;
  //const matches = htmlBody.match(/Card no.\s(XX\d+)\sfor\sINR\s(\d+(.\d+))?\sat\s+(.+?)\son\s*(\d+-\d+-\d+\s\d+:\d+:\d+)/);
    const matches = htmlBody.match(/Card no.\s(XX\d+)\sfor\sINR\s(\d+(.\d+))?\sat\s+(.+?)\son\s*(\d+-\d+-\d+\s\d+:\d+:\d+)/);
 
 if (matches) {
-  const [_, cardNo, amount, merchant, date, time, totalCreditLimit, availableLimit] = matches;
+  const [_, cardNo, amount, merchant, date, time, totalCreditLimit, availableLimit, fullName] = matches;
+  console.log('Full Name:', fullName);
   console.log('Card Number:', cardNo);
   console.log('Amount:', amount);
   console.log('Merchant:', merchant);
@@ -120,11 +135,6 @@ if (matches) {
   console.log('Time:', time);
   console.log('Total Credit Limit:', totalCreditLimit);
   console.log('Available Limit:', availableLimit);
-
-  // console.log('Card Number:', matches[1]);
-  // console.log('Amount:', matches[2]);
-  // console.log('Merchant:', matches[4]);
-  // console.log('Date:', matches[5]);
 
 } else {
   console.log('No transaction information found in the email');
