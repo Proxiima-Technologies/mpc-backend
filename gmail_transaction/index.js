@@ -110,67 +110,58 @@ function getMail(msgId, auth){
   });
 }
 
+function extractDetails(text) {
+  
+  let regex = ".*Card no\\.\\s*(\\w+)\\s*for\\s*(INR\\s*)(\\d+\\.\\d+)\\s*at\\s*(\\w+\\s*\\w*)\\s*on\\s*(\\d{2}-\\d{2}-\\d{2})\\s*(\\d{2}:\\d{2}:\\d{2})\\.\\s*The\\s*total\\s*credit\\s*limit\\s*on\\s*your\\s*card\\s*is\\s*(INR\\s*)(\\d+\\.?\\d*),\\s*while\\s*the\\s*available\\s*limit\\s*is\\s*(INR\\s*)(\\d+\\.?\\d*)\\..*";
+
+  const match = text.match(new RegExp(regex));
+  
+  const details = {
+    cardNo: match[1],
+    amount: match[3],
+    merchant:  match[4],
+    date: match[5],
+    time: match[6],
+    totalCreditLimit:  match[8],
+    availableLimit: match[10],
+  };
+  
+  return details;
+}
 
 function extractTransactionInfo(msgId, htmlBody) {
   console.log("Gmail Message ID:", msgId);
 
-  fs.writeFile("transaction_raw_content.txt", htmlBody, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-}); 
+//   fs.writeFile("transaction_raw_content.txt", htmlBody, function(err) {
+//     if(err) {
+//         return console.log(err);
+//     }
+//     console.log("The file was saved!");
+// }); 
 
  // const regex = /Thank you for using your Card no. (\S+) for (\S+) at (\S+) on (\S+) (\S+)\. The total credit limit on your card is (\S+), while the available limit is (\S+)\./;
  //const matches = htmlBody.match(/Card no.\s(XX\d+)\sfor\sINR\s(\d+(.\d+))?\sat\s+(.+?)\son\s*(\d+-\d+-\d+\s\d+:\d+:\d+)/);
-   const matches = htmlBody.match(/Card no.\s(XX\d+)\sfor\sINR\s(\d+(.\d+))?\sat\s+(.+?)\son\s*(\d+-\d+-\d+\s\d+:\d+:\d+)/);
+
+ const matches = extractDetails(htmlBody);
 
 if (matches) {
-  const [_, cardNo, amount, merchant, date, time, totalCreditLimit, availableLimit, fullName] = matches;
-  console.log('Full Name:', fullName);
-  console.log('Card Number:', cardNo);
-  console.log('Amount:', amount);
-  console.log('Merchant:', merchant);
-  console.log('Date:', date);
-  console.log('Time:', time);
-  console.log('Total Credit Limit:', totalCreditLimit);
-  console.log('Available Limit:', availableLimit);
+
+  // const [cardNo, amount, merchant, date, time, totalCreditLimit, availableLimit, fullName] = matches;
+  // console.log('Full Name:', fullName);
+  // console.log('Card Number:', cardNo);
+  // console.log('Amount:', amount);
+  // console.log('Merchant:', merchant);
+  // console.log('Date:', date);
+  // console.log('Time:', time);
+  // console.log('Total Credit Limit:', totalCreditLimit);
+  // console.log('Available Limit:', availableLimit);
+
+  console.log(matches);
 
 } else {
   console.log('No transaction information found in the email');
-  //console.log(htmlBody);
 }
 }
 
 authorize().then(listMessages).catch(console.error);
-
-// authorize()
-//   .then((auth) => {
-//     return listMessages(auth, '');
-//   })
-//   .then((messages) => {
-//     if (messages && messages.length > 0) {
-//       return getMail(messages[0].id, auth);
-//     } else {
-//       console.log('No messages found.');
-//     }
-//   })
-//   .then((mail) => {
-//     const transactionInfo = extractTransactionInfo(mail.htmlBody);
-//     if (transactionInfo) {
-//       console.log('Full Name:', transactionInfo.fullName);
-//       console.log('Transaction Amount:', transactionInfo.transactionAmount);
-//       console.log('Merchant Name:', transactionInfo.merchantName);
-//       console.log('Transaction Date:', transactionInfo.transactionDate);
-//       console.log('Transaction Time:', transactionInfo.transactionTime);
-//       console.log('Total Credit Limit:', transactionInfo.totalCreditLimit);
-//       console.log('Available Limit:', transactionInfo.availableLimit);
-//     } else {
-//       console.log('Transaction info not found.');
-//     }
-//   })
-//   .catch(console.error);
-
-
-
 
