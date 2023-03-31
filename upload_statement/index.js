@@ -8,7 +8,8 @@ const getPDF = async (file) => {
 
       const text = pdfExtract.text;
       
-      // this is kinda working //const regex = /(\d{2}\/\d{2}\/\d{4})((.|\n)*?)((\d|,)*(\.\d{2})) ([CD]r)/gm;
+      // this is kinda working 
+      const regex = /(\d{2}\/\d{2}\/\d{4})((.|\n)*?)((\d|,)*(\.\d{2})) ([CD]r)/gm;
       // const regex = /(\d{2}\/\d{2}\/\d{4})\s+(.+?)\s{2,}(\w+)\s{2,}([\d,]+\.\d{2})\s+(\w+)/g;
 
       let match;
@@ -18,7 +19,8 @@ const getPDF = async (file) => {
         transactions.push({
           date: match[1],
           description: match[2].trim(),
-          amount: parseFloat(match[5].replace(',', '')) * (match[7] === 'Dr' ? -1 : 1),
+          amount: parseFloat(match[5]) ,
+          type: match[7]
         });
       }
       
