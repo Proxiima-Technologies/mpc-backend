@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/Users'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _jsonwebtoken = require('jsonwebtoken'); var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+var _Users = require('../models/Users'); var _Users2 = _interopRequireDefault(_Users);
 
 class LoginController {
   async store(req, res) {
@@ -11,7 +11,7 @@ class LoginController {
       })
     }
 
-    const user = await User.findOne({ where: { phone_number } })
+    const user = await _Users2.default.findOne({ where: { phone_number } })
 
     if (!user) {
       return res.status(401).json({
@@ -26,7 +26,7 @@ class LoginController {
     }
 
     const { user_id } = user
-    const token = jwt.sign({ user_id, phone_number }, process.env.TOKEN_SECRET, {
+    const token = _jsonwebtoken2.default.sign({ user_id, phone_number }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION,
     })
 
@@ -34,4 +34,4 @@ class LoginController {
   }
 }
 
-export default new LoginController()
+exports. default = new LoginController()

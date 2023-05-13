@@ -1,14 +1,14 @@
-import Sequelize, { Model } from 'sequelize'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _sequelize = require('sequelize'); var _sequelize2 = _interopRequireDefault(_sequelize);
 
-export default class UserTransactions extends Model {
+ class UserTransactions extends _sequelize.Model {
   static init(sequelize) {
     super.init({
       user_transaction_id: {
-        type: Sequelize.INTEGER,
+        type: _sequelize2.default.INTEGER,
         primaryKey: true,
       },
       merchant_name: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -17,7 +17,7 @@ export default class UserTransactions extends Model {
         },
       },
       merchant_category: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -26,7 +26,7 @@ export default class UserTransactions extends Model {
         },
       },
       amount: {
-        type: Sequelize.INTEGER,
+        type: _sequelize2.default.INTEGER,
         defaultValue: '',
         valildate: {
           isInt: {
@@ -35,7 +35,7 @@ export default class UserTransactions extends Model {
         },
       },
       location: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -44,14 +44,14 @@ export default class UserTransactions extends Model {
         },
       },
       date: {
-        type: Sequelize.DATEONLY,
+        type: _sequelize2.default.DATEONLY,
         defaultValue: '',
         valildate: {
      
         },
       },
       time: {
-        type: Sequelize.TIME,
+        type: _sequelize2.default.TIME,
         defaultValue: '',
         valildate: {
           
@@ -70,4 +70,4 @@ export default class UserTransactions extends Model {
   static associate(models) {
     this.belongsTo(models.UserCreditCards, { foreignKey: 'user_card_id' })
   }
-}
+} exports.default = UserTransactions;

@@ -1,15 +1,15 @@
-import Sequelize, { Model } from 'sequelize'
-import bcryptjs from 'bcryptjs'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _sequelize = require('sequelize'); var _sequelize2 = _interopRequireDefault(_sequelize);
+var _bcryptjs = require('bcryptjs'); var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
-export default class Users extends Model {
+ class Users extends _sequelize.Model {
   static init(sequelize) {
     super.init({
       user_id: {
-        type: Sequelize.INTEGER,
+        type: _sequelize2.default.INTEGER,
         primaryKey: true,
       },
       phone_number: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         unique: {
           msg: 'Phone number already used for a registered account.',
@@ -22,11 +22,11 @@ export default class Users extends Model {
         },
       },
       password_hash: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
       },
       password: {
-        type: Sequelize.VIRTUAL,
+        type: _sequelize2.default.VIRTUAL,
         defaultValue: '',
         validate: {
           len: {
@@ -36,7 +36,7 @@ export default class Users extends Model {
         },
       },
       name: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         // validate: {
           // notEmpty: {
@@ -45,7 +45,7 @@ export default class Users extends Model {
         // },
       },
       email: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         unique: {
           msg: 'Email already used for a registered account. ',
@@ -57,7 +57,7 @@ export default class Users extends Model {
         // },
       },
       picture: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         // valildate: {
         //   notEmpty: {
@@ -71,7 +71,7 @@ export default class Users extends Model {
 
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
-        user.password_hash = await bcryptjs.hash(user.password, 8)
+        user.password_hash = await _bcryptjs2.default.hash(user.password, 8)
       }
     })
 
@@ -87,6 +87,6 @@ export default class Users extends Model {
   }
 
   passwordIsCorrect(password) {
-    return bcryptjs.compare(password, this.password_hash)
+    return _bcryptjs2.default.compare(password, this.password_hash)
   }
-}
+} exports.default = Users;

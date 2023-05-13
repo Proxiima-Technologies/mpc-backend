@@ -1,4 +1,4 @@
-const bcryptjs = require('bcryptjs')
+"use strict";const bcryptjs = require('bcryptjs')
 
 module.exports = {
   up: async (queryInterface) => queryInterface.bulkInsert(

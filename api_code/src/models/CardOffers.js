@@ -1,14 +1,14 @@
-import Sequelize, { Model } from 'sequelize'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _sequelize = require('sequelize'); var _sequelize2 = _interopRequireDefault(_sequelize);
 
-export default class CardOffers extends Model {
+ class CardOffers extends _sequelize.Model {
   static init(sequelize) {
     super.init({
       offer_id: {
-        type: Sequelize.INTEGER,
+        type: _sequelize2.default.INTEGER,
         primaryKey: true,
       },
       offer_name: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -17,7 +17,7 @@ export default class CardOffers extends Model {
         },
       },
       offer_description: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -26,7 +26,7 @@ export default class CardOffers extends Model {
         },
       },
       limit: {
-        type: Sequelize.STRING,
+        type: _sequelize2.default.STRING,
         defaultValue: '',
         valildate: {
           notEmpty: {
@@ -44,4 +44,4 @@ export default class CardOffers extends Model {
     this.belongsTo(models.CreditCards, { foreignKey: 'card_id' })
   }
 
-}
+} exports.default = CardOffers;

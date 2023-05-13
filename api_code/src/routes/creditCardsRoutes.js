@@ -1,10 +1,10 @@
-import { Router } from 'express'
-import creditcardsController from '../controllers/CreditCardsController'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _express = require('express');
+var _CreditCardsController = require('../controllers/CreditCardsController'); var _CreditCardsController2 = _interopRequireDefault(_CreditCardsController);
 
-import loginRequired from '../middlewares/loginRequired'
+var _loginRequired = require('../middlewares/loginRequired'); var _loginRequired2 = _interopRequireDefault(_loginRequired);
 
-const router = new Router()
+const router = new (0, _express.Router)()
 
-router.get('/', creditcardsController.index)
+router.get('/', _CreditCardsController2.default.index)
 
-export default router
+exports. default = router

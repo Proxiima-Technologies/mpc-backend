@@ -1,4 +1,4 @@
-/** @type {import('sequelize-cli').Migration} */
+"use strict";/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     queryInterface.createTable('credit_cards', {

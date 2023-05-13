@@ -1,11 +1,11 @@
-import User from '../models/Users'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _Users = require('../models/Users'); var _Users2 = _interopRequireDefault(_Users);
 
 class UserController {
 
   // Index
   async index(req, res) {
     try {
-      const user = await User.findByPk(req.userId) 
+      const user = await _Users2.default.findByPk(req.userId) 
       const { user_id, name, email, phone_number } = user
       return res.json({ user_id, name, email, phone_number })
     } catch (e) {
@@ -28,7 +28,7 @@ class UserController {
   async store_additional(req, res) {
 
     try {
-      const user = await User.findByPk(req.userId) // req.userId comes from loginRequired middleware
+      const user = await _Users2.default.findByPk(req.userId) // req.userId comes from loginRequired middleware
 
       if (!user) {
         return res.status(400).json({
@@ -53,7 +53,7 @@ class UserController {
   // Update
   async update(req, res) {
     try {
-      const user = await User.findByPk(req.userId) // req.userId comes from loginRequired middleware
+      const user = await _Users2.default.findByPk(req.userId) // req.userId comes from loginRequired middleware
 
       if (!user) {
         return res.status(400).json({
@@ -77,7 +77,7 @@ class UserController {
   // Delete
   async delete(req, res) {
     try {
-      const user = await User.findByPk(req.userId) // req.userId comes from loginRequired middleware
+      const user = await _Users2.default.findByPk(req.userId) // req.userId comes from loginRequired middleware
       if (!user) {
         return res.status(400).json({
           errors: ['User does not exist.'],
@@ -98,4 +98,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+exports. default = new UserController()

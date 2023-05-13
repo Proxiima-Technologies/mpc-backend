@@ -1,7 +1,7 @@
-class HomeController {
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});class HomeController {
   async index(req, res) {
     res.json('OK')
   }
 }
 
-export default new HomeController()
+exports. default = new HomeController()

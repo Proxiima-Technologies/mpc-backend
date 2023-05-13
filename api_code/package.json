@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./src --transforms imports",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "dev": "concurrently \"yarn run start\" \"yarn run localtunnel\""
   },
   "keywords": [],
   "author": "",

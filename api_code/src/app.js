@@ -1,19 +1,19 @@
-import dotenv from 'dotenv'
-import { resolve } from 'path'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
+var _path = require('path');
 
-dotenv.config()
+_dotenv2.default.config()
 
-import './database'
+require('./database');
 
-import express from 'express'
-import cors from 'cors'
+var _express = require('express'); var _express2 = _interopRequireDefault(_express);
+var _cors = require('cors'); var _cors2 = _interopRequireDefault(_cors);
 
-import homeRoutes from './routes/homeRoutes'
-import loginRoutes from './routes/loginRoutes'
-import registerRoutes from './routes/registerRoutes'
-import userRoutes from './routes/userRoutes'
-import bankDetailsRoutes from './routes/bankDetailsRoutes'
-import creditCardsRoutes from './routes/creditCardsRoutes'
+var _homeRoutes = require('./routes/homeRoutes'); var _homeRoutes2 = _interopRequireDefault(_homeRoutes);
+var _loginRoutes = require('./routes/loginRoutes'); var _loginRoutes2 = _interopRequireDefault(_loginRoutes);
+var _registerRoutes = require('./routes/registerRoutes'); var _registerRoutes2 = _interopRequireDefault(_registerRoutes);
+var _userRoutes = require('./routes/userRoutes'); var _userRoutes2 = _interopRequireDefault(_userRoutes);
+var _bankDetailsRoutes = require('./routes/bankDetailsRoutes'); var _bankDetailsRoutes2 = _interopRequireDefault(_bankDetailsRoutes);
+var _creditCardsRoutes = require('./routes/creditCardsRoutes'); var _creditCardsRoutes2 = _interopRequireDefault(_creditCardsRoutes);
 
 const whiteList = [
   'http://localhost:3005', // REST API on localhost
@@ -32,26 +32,26 @@ const corsOptions = {
 
 class App {
   constructor() {
-    this.app = express()
+    this.app = _express2.default.call(void 0, )
     this.middlewares()
     this.routes()
   }
 
   middlewares() {
-    this.app.use(cors(corsOptions))
-    this.app.use(express.urlencoded({ extended: true }))
-    this.app.use(express.json())
-    this.app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')))
+    this.app.use(_cors2.default.call(void 0, corsOptions))
+    this.app.use(_express2.default.urlencoded({ extended: true }))
+    this.app.use(_express2.default.json())
+    this.app.use('/images/', _express2.default.static(_path.resolve.call(void 0, __dirname, '..', 'uploads', 'images')))
   }
 
   routes() {
-    this.app.use('/', homeRoutes)
-    this.app.use('/login', loginRoutes)
-    this.app.use('/register', registerRoutes)
-    this.app.use('/users', userRoutes)
-    this.app.use('/bank-details', bankDetailsRoutes)
-    this.app.use('/credit-cards', creditCardsRoutes)
+    this.app.use('/', _homeRoutes2.default)
+    this.app.use('/login', _loginRoutes2.default)
+    this.app.use('/register', _registerRoutes2.default)
+    this.app.use('/users', _userRoutes2.default)
+    this.app.use('/bank-details', _bankDetailsRoutes2.default)
+    this.app.use('/credit-cards', _creditCardsRoutes2.default)
   }
 }
 
-export default new App().app
+exports. default = new App().app

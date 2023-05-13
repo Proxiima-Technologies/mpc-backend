@@ -1,19 +1,19 @@
-import { Router } from 'express'
-import userController from '../controllers/UserController'
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _express = require('express');
+var _UserController = require('../controllers/UserController'); var _UserController2 = _interopRequireDefault(_UserController);
 
-import loginRequired from '../middlewares/loginRequired'
+var _loginRequired = require('../middlewares/loginRequired'); var _loginRequired2 = _interopRequireDefault(_loginRequired);
 
-const router = new Router()
+const router = new (0, _express.Router)()
 
 // when loginRequired:  JWT via loginRequired middleware identifies the id to be updated
 
-router.get('/', loginRequired, userController.index)
+router.get('/', _loginRequired2.default, _UserController2.default.index)
 
-router.post('/store_additional', loginRequired, userController.store_additional)
+router.post('/store_additional', _loginRequired2.default, _UserController2.default.store_additional)
 
 // router.get('/:id', loginRequired, userController.show) // user can see others
 
-router.put('/', loginRequired, userController.update) // user only updates their own account
-router.delete('/', loginRequired, userController.delete) // user only deletes their own account
+router.put('/', _loginRequired2.default, _UserController2.default.update) // user only updates their own account
+router.delete('/', _loginRequired2.default, _UserController2.default.delete) // user only deletes their own account
 
-export default router
+exports. default = router
