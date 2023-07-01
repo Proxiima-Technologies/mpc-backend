@@ -1,0 +1,46 @@
+Database Creds:
+mpcdbinstance.c1a8qz6vsk20.ap-south-1.rds.amazonaws.com
+mpcdbinstance
+User: admin
+Passord: mpcdbadmin123#
+
+Login API:
+Post Request: http://localhost:3005/login
+Body:
+{
+    "phone_number": "9653408141",
+    "password": "123456"
+}
+
+Register API:
+Post Request: http://localhost:3005/register
+Body:
+{
+    "phone_number": "9653408141",
+    "password": "123456"
+}
+
+Store User Details API:
+Post Request: http://localhost:3005/users/store_additional
+Authorization: Add Token from Login
+Body:
+{
+    "name": "Nikhil",
+    "email": "nik@test.com"
+}
+
+Bank Details API:
+Get Request: http://localhost:3005/bank-details
+Authorization: Add Token from Login
+
+Credit Cards Details API:
+Get Request: http://localhost:3005/credit-cards
+Authorization: Add Token from Login
+
+Credit Cards Offers API:
+Get Request: http://localhost:3005/card-offers
+Authorization: Add Token from Login
+Body:
+{
+    "card_id": "1"
+}
